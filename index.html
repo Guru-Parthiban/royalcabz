@@ -43,3 +43,200 @@ Royal Cabz
 
 </body>
 </html>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Book Your Ride</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:linear-gradient(135deg,#2193b0,#6dd5ed);
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.container{
+width:450px;
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 15px 40px rgba(0,0,0,0.2);
+}
+
+h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:6px;
+border:1px solid #ccc;
+font-size:14px;
+}
+
+.cabs{
+display:flex;
+justify-content:space-between;
+margin-top:15px;
+}
+
+.cab{
+width:30%;
+padding:10px;
+text-align:center;
+border:2px solid #ddd;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+position:relative;
+}
+
+.cab:hover{
+border-color:#2193b0;
+transform:scale(1.05);
+}
+
+.cab.selected{
+border-color:#2193b0;
+background:#eaf7fb;
+}
+
+.cab img{
+width:60px;
+}
+
+/* Tick mark */
+.tick{
+position:absolute;
+top:5px;
+right:5px;
+background:#2193b0;
+color:white;
+border-radius:50%;
+width:20px;
+height:20px;
+display:none;
+align-items:center;
+justify-content:center;
+font-size:14px;
+}
+
+.cab.selected .tick{
+display:flex;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#2193b0;
+color:white;
+border:none;
+border-radius:6px;
+font-size:16px;
+margin-top:15px;
+cursor:pointer;
+}
+
+button:hover{
+background:#176d85;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Royal Cabz 🚕</h2>
+
+<input type="text" id="name" placeholder="Your Name">
+
+<input type="tel" id="phone" placeholder="Phone Number">
+
+<input type="text" id="pickup" placeholder="Pickup Location">
+
+<input type="text" id="drop" placeholder="Drop Location">
+
+<div class="cabs">
+
+  <div class="cab selected" onclick="selectCab(this, 'Mini')">
+    <div class="tick">✓</div>
+    <img src="https://img.icons8.com/color/96/car.png">
+    <p>Mini</p>
+  </div>
+
+  <div class="cab" onclick="selectCab(this, 'Sedan')">
+    <div class="tick">✓</div>
+    <img src="https://img.icons8.com/color/96/sedan.png">
+    <p>Sedan</p>
+  </div>
+
+  <div class="cab" onclick="selectCab(this, 'SUV')">
+    <div class="tick">✓</div>
+    <img src="https://img.icons8.com/color/96/suv.png">
+    <p>SUV</p>
+  </div>
+
+</div>
+
+<button onclick="bookCab()">Book via WhatsApp</button>
+
+</div>
+
+<script>
+
+var selectedCab = "Mini";
+
+function selectCab(element, cabType){
+
+  selectedCab = cabType;
+
+  // remove selection from all
+  var cabs = document.querySelectorAll(".cab");
+  cabs.forEach(cab => cab.classList.remove("selected"));
+
+  // add selection to clicked
+  element.classList.add("selected");
+}
+
+function bookCab(){
+
+  var name = document.getElementById("name").value;
+  var phone = document.getElementById("phone").value;
+  var pickup = document.getElementById("pickup").value;
+  var drop = document.getElementById("drop").value;
+
+  if(!name || !phone || !pickup || !drop){
+    alert("Please fill all details");
+    return;
+  }
+
+  var message = "🚕 Royal Cabz Booking%0A"
+              + "Name: " + name + "%0A"
+              + "Phone: " + phone + "%0A"
+              + "Pickup: " + pickup + "%0A"
+              + "Drop: " + drop + "%0A"
+              + "Cab Type: " + selectedCab;
+
+  var whatsappNumber = "91XXXXXXXXXX"; // CHANGE THIS
+
+  var url = "https://wa.me/" + whatsappNumber + "?text=" + message;
+
+  window.open(url, "_blank");
+}
+
+</script>
+
+</body>
+</html>
