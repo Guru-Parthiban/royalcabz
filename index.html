@@ -1,11 +1,11 @@
+<!DOCTYPE html>
 <html>
 <head>
-<title>Book Your Ride</title>
+<title>Royal Cabz</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-
 
 body{
   margin:0;
@@ -13,103 +13,39 @@ body{
   background:linear-gradient(135deg,#2193b0,#6dd5ed);
   min-height:100vh;
   display:flex;
-  flex-direction:column;   /* IMPORTANT */
+  flex-direction:column;
   align-items:center;
   justify-content:center;
 }
+
 .container{
-width:350px;
-background:white;
-padding:25px;
-border-radius:12px;
-box-shadow:0 15px 40px rgba(0,0,0,0.2);
+  width:90%;
+  max-width:350px;
+  background:white;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
 }
 
 h2{
-text-align:center;
-margin-bottom:20px;
+  text-align:center;
+  margin-bottom:20px;
 }
 
 input{
-width:100%;
-padding:12px;
-margin:10px 0;
-border-radius:6px;
-border:1px solid #ccc;
-font-size:14px;
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:6px;
+  border:1px solid #ccc;
+  font-size:16px;
 }
 
-.cabs{
-display:flex;
-justify-content:space-between;
-margin-top:15px;
-}
-
-.cab{
-width:30%;
-padding:10px;
-text-align:center;
-border:2px solid #ddd;
-border-radius:8px;
-cursor:pointer;
-transition:0.3s;
-position:relative;
-}
-
-.cab:hover{
-border-color:#2193b0;
-transform:scale(1.05);
-}
-
-.cab.selected{
-border-color:#2193b0;
-background:#eaf7fb;
-}
-
-.cab img{
-width:60px;
-}
-
-/* Tick mark */
-.tick{
-position:absolute;
-top:5px;
-right:5px;
-background:#2193b0;
-color:white;
-border-radius:50%;
-width:20px;
-height:20px;
-display:none;
-align-items:center;
-justify-content:center;
-font-size:14px;
-}
-
-.cab.selected .tick{
-display:flex;
-}
-
-button{
-width:100%;
-padding:12px;
-background:#2193b0;
-color:white;
-border:none;
-border-radius:6px;
-font-size:16px;
-margin-top:15px;
-cursor:pointer;
-}
-
-button:hover{
-background:#176d85;
-}
-  .trip-type{
+/* Trip Toggle */
+.trip-type{
   display:flex;
-  justify-content:space-between;
-  margin:15px 0;
   gap:10px;
+  margin:15px 0;
 }
 
 .toggle{
@@ -119,19 +55,70 @@ background:#176d85;
   border:2px solid #ddd;
   border-radius:8px;
   cursor:pointer;
-  transition:0.3s;
-  font-size:14px;
   background:#f9f9f9;
-}
-
-.toggle:hover{
-  border-color:#2193b0;
 }
 
 .toggle.active{
   background:#2193b0;
   color:white;
   border-color:#2193b0;
+}
+
+/* Cab Selection */
+.cabs{
+  display:flex;
+  justify-content:space-between;
+  margin-top:15px;
+}
+
+.cab{
+  width:30%;
+  padding:10px;
+  text-align:center;
+  border:2px solid #ddd;
+  border-radius:8px;
+  cursor:pointer;
+  position:relative;
+}
+
+.cab.selected{
+  border-color:#2193b0;
+  background:#eaf7fb;
+}
+
+.cab img{
+  width:60px;
+}
+
+/* Tick */
+.tick{
+  position:absolute;
+  top:5px;
+  right:5px;
+  background:#2193b0;
+  color:white;
+  border-radius:50%;
+  width:20px;
+  height:20px;
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+
+.cab.selected .tick{
+  display:flex;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  background:#2193b0;
+  color:white;
+  border:none;
+  border-radius:6px;
+  font-size:16px;
+  margin-top:15px;
+  cursor:pointer;
 }
 
 </style>
@@ -143,30 +130,19 @@ background:#176d85;
 
 <h2>Royal Cabz 🚕</h2>
 
-  <div class="trip-type">
-
-  <div class="toggle active" onclick="selectTrip(this, 'Airport')">
-    Airport
-  </div>
-
-  <div class="toggle" onclick="selectTrip(this, 'One Way')">
-    One Way
-  </div>
-
-  <div class="toggle" onclick="selectTrip(this, 'Round Trip')">
-    Round Trip
-  </div>
-
+<!-- Trip Type -->
+<div class="trip-type">
+  <div class="toggle active" onclick="selectTrip(this, 'Airport')">Airport</div>
+  <div class="toggle" onclick="selectTrip(this, 'One Way')">One Way</div>
+  <div class="toggle" onclick="selectTrip(this, 'Round Trip')">Round Trip</div>
 </div>
 
 <input type="text" id="name" placeholder="Your Name">
-
 <input type="tel" id="phone" placeholder="Phone Number">
-
 <input type="text" id="pickup" placeholder="Pickup Location">
-
 <input type="text" id="drop" placeholder="Drop Location">
 
+<!-- Cab Selection -->
 <div class="cabs">
 
   <div class="cab selected" onclick="selectCab(this, 'Mini')">
@@ -196,55 +172,55 @@ background:#176d85;
 <script>
 
 var selectedCab = "Mini";
+var selectedTrip = "Airport";
 
+/* Select Cab */
 function selectCab(element, cabType){
-
   selectedCab = cabType;
 
-  // remove selection from all
-  var cabs = document.querySelectorAll(".cab");
-  cabs.forEach(cab => cab.classList.remove("selected"));
+  document.querySelectorAll(".cab").forEach(c =>
+    c.classList.remove("selected")
+  );
 
-  // add selection to clicked
   element.classList.add("selected");
+}
 
-  var selectedTrip = "Airport";
-
+/* Select Trip */
 function selectTrip(element, tripType){
-
   selectedTrip = tripType;
 
-  var toggles = document.querySelectorAll(".toggle");
-  toggles.forEach(t => t.classList.remove("active"));
+  document.querySelectorAll(".toggle").forEach(t =>
+    t.classList.remove("active")
+  );
 
   element.classList.add("active");
 }
-}
 
+/* Booking */
 function bookCab(){
-  
 
-  var name = document.getElementById("name").value;
-  var phone = document.getElementById("phone").value;
-  var pickup = document.getElementById("pickup").value;
-  var drop = document.getElementById("drop").value;
+  var name = document.getElementById("name").value.trim();
+  var phone = document.getElementById("phone").value.trim();
+  var pickup = document.getElementById("pickup").value.trim();
+  var drop = document.getElementById("drop").value.trim();
 
   if(!name || !phone || !pickup || !drop){
     alert("Please fill all details");
     return;
   }
 
-   var message = "🚕 Royal Cabz Booking%0A"
-            + "Trip Type: " + selectedTrip + "%0A"
-            + "Name: " + name + "%0A"
-            + "Phone: " + phone + "%0A"
-            + "Pickup: " + pickup + "%0A"
-            + "Drop: " + drop + "%0A"
-            + "Cab Type: " + selectedCab;
+  var message =
+`🚕 Royal Cabz Booking
+Trip Type: ${selectedTrip}
+Name: ${name}
+Phone: ${phone}
+Pickup: ${pickup}
+Drop: ${drop}
+Cab Type: ${selectedCab}`;
 
-  var whatsappNumber = "919488003687"; // CHANGE THIS
+  var whatsappNumber = "919488003687";
 
-  var url = "https://wa.me/" + whatsappNumber + "?text=" + message;
+  var url = "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message);
 
   window.open(url, "_blank");
 }
