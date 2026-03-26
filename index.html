@@ -105,6 +105,34 @@ cursor:pointer;
 button:hover{
 background:#176d85;
 }
+  .trip-type{
+  display:flex;
+  justify-content:space-between;
+  margin:15px 0;
+  gap:10px;
+}
+
+.toggle{
+  flex:1;
+  padding:10px;
+  text-align:center;
+  border:2px solid #ddd;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.3s;
+  font-size:14px;
+  background:#f9f9f9;
+}
+
+.toggle:hover{
+  border-color:#2193b0;
+}
+
+.toggle.active{
+  background:#2193b0;
+  color:white;
+  border-color:#2193b0;
+}
 
 </style>
 </head>
@@ -114,6 +142,22 @@ background:#176d85;
 <div class="container">
 
 <h2>Royal Cabz 🚕</h2>
+
+  <div class="trip-type">
+
+  <div class="toggle active" onclick="selectTrip(this, 'Airport')">
+    Airport
+  </div>
+
+  <div class="toggle" onclick="selectTrip(this, 'One Way')">
+    One Way
+  </div>
+
+  <div class="toggle" onclick="selectTrip(this, 'Round Trip')">
+    Round Trip
+  </div>
+
+</div>
 
 <input type="text" id="name" placeholder="Your Name">
 
@@ -163,9 +207,22 @@ function selectCab(element, cabType){
 
   // add selection to clicked
   element.classList.add("selected");
+
+  var selectedTrip = "Airport";
+
+function selectTrip(element, tripType){
+
+  selectedTrip = tripType;
+
+  var toggles = document.querySelectorAll(".toggle");
+  toggles.forEach(t => t.classList.remove("active"));
+
+  element.classList.add("active");
+}
 }
 
 function bookCab(){
+  
 
   var name = document.getElementById("name").value;
   var phone = document.getElementById("phone").value;
@@ -177,12 +234,13 @@ function bookCab(){
     return;
   }
 
-  var message = "🚕 Royal Cabz Booking%0A"
-              + "Name: " + name + "%0A"
-              + "Phone: " + phone + "%0A"
-              + "Pickup: " + pickup + "%0A"
-              + "Drop: " + drop + "%0A"
-              + "Cab Type: " + selectedCab;
+   var message = "🚕 Royal Cabz Booking%0A"
+            + "Trip Type: " + selectedTrip + "%0A"
+            + "Name: " + name + "%0A"
+            + "Phone: " + phone + "%0A"
+            + "Pickup: " + pickup + "%0A"
+            + "Drop: " + drop + "%0A"
+            + "Cab Type: " + selectedCab;
 
   var whatsappNumber = "919488003687"; // CHANGE THIS
 
