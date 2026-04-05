@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html>
-<div class="header">
-  <h1>Royal Cabz</h1>
-  <p>Karur's Trusted Taxi Service</p>
-</div>
+
 <head>
 <title>Royal Cabz</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -15,33 +11,51 @@ body{
   margin:0;
   font-family:Arial, sans-serif;
   background:white;
-  min-height:100vh;
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
 }
 
+/* HEADER */
 .header{
+  width:100%;
+  height:200px;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
+  position:relative;
+  overflow:hidden;
   color:white;
-  background-image: url("images/logo.png");
+  background:linear-gradient(135deg,#2193b0,#6dd5ed);
 }
 
-.header h1{
-  margin:0;
+/* Faded Logo */
+.header::before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-image:url("logo.png");
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:250px;
+  opacity:0.12;
+}
+
+/* Header text */
+.header h1,
+.header p{
+  position:relative;
   z-index:1;
+  margin:0;
 }
 
 .header p{
-  margin:5px 0 0;
   font-size:14px;
-  z-index:1;
 }
-  
+
+/* FORM */
 .container{
   width:90%;
   max-width:350px;
@@ -49,13 +63,14 @@ body{
   padding:25px;
   border-radius:12px;
   box-shadow:0 15px 40px rgba(0,0,0,0.2);
+  margin-top:-40px;
 }
 
 h2{
   text-align:center;
-  margin-bottom:20px;
 }
 
+/* INPUTS */
 input{
   width:100%;
   padding:12px;
@@ -133,6 +148,7 @@ input{
   display:flex;
 }
 
+/* BUTTON */
 button{
   width:100%;
   padding:12px;
@@ -144,10 +160,45 @@ button{
   margin-top:15px;
   cursor:pointer;
 }
-  .routes{
+
+/* ROUTES */
+.routes{
   width:90%;
   max-width:500px;
-  margin:20px auto;
+  margin:30px auto;
+}
+
+.routes h2{
+  text-align:center;
+}
+
+.route-card{
+  background:#fff;
+  padding:15px;
+  margin-bottom:15px;
+  border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.route-info h3{
+  margin:0;
+  font-size:15px;
+}
+
+.price{
+  font-weight:bold;
+  margin:5px 0;
+}
+
+.route-card button{
+  width:auto;
+  padding:8px 12px;
+  background:#ffc107;
+  color:black;
+  font-size:12px;
 }
 
 </style>
@@ -155,15 +206,21 @@ button{
 
 <body>
 
+<!-- HEADER -->
+<div class="header">
+  <h1>Royal Cabz 🚕</h1>
+  <p>Karur's Trusted Taxi Service</p>
+</div>
+
+<!-- BOOKING FORM -->
 <div class="container">
 
-<h2>Royal Cabz 🚕</h2>
+<h2>Book Your Ride</h2>
 
-<!-- Trip Type -->
 <div class="trip-type">
-  <div class="toggle active" onclick="selectTrip(this, 'Airport')">Airport</div>
-  <div class="toggle" onclick="selectTrip(this, 'One Way')">One Way</div>
-  <div class="toggle" onclick="selectTrip(this, 'Round Trip')">Round Trip</div>
+  <div class="toggle active" onclick="selectTrip(this,'Airport')">Airport</div>
+  <div class="toggle" onclick="selectTrip(this,'One Way')">One Way</div>
+  <div class="toggle" onclick="selectTrip(this,'Round Trip')">Round Trip</div>
 </div>
 
 <input type="text" id="name" placeholder="Your Name">
@@ -171,30 +228,236 @@ button{
 <input type="text" id="pickup" placeholder="Pickup Location">
 <input type="text" id="drop" placeholder="Drop Location">
 
-<!-- Cab Selection -->
 <div class="cabs">
-
-  <div class="cab selected" onclick="selectCab(this, 'Mini')">
+  <div class="cab selected" onclick="selectCab(this,'Mini')">
     <div class="tick">✓</div>
     <img src="https://img.icons8.com/color/96/car.png">
     <p>Mini</p>
   </div>
 
-  <div class="cab" onclick="selectCab(this, 'Sedan')">
+  <div class="cab" onclick="selectCab(this,'Sedan')">
     <div class="tick">✓</div>
     <img src="https://img.icons8.com/color/96/sedan.png">
     <p>Sedan</p>
   </div>
 
-  <div class="cab" onclick="selectCab(this, 'SUV')">
+  <div class="cab" onclick="selectCab(this,'SUV')">
     <div class="tick">✓</div>
     <img src="https://img.icons8.com/color/96/suv.png">
     <p>SUV</p>
   </div>
-
 </div>
 
 <button onclick="bookCab()">Book via WhatsApp</button>
+
+</div>
+
+<!-- ROUTES -->
+<div class="routes">
+
+<h2>Popular Routes from Karur</h2>
+
+<!-- 1 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Trichy Airport Taxi</h3>
+    <p class="price">₹2220</p>
+    <p>83 KM • Toll & Parking Extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Trichy Airport')">BOOK</button>
+</div>
+
+<!-- 2 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Coimbatore Airport Taxi</h3>
+    <p class="price">₹2220</p>
+    <p>Min 130 KM • ₹14/km extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Coimbatore Airport')">BOOK</button>
+</div>
+
+<!-- 3 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Chennai Airport Taxi</h3>
+    <p class="price">₹5440</p>
+    <p>360 KM • ₹14/km extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Chennai Airport')">BOOK</button>
+</div>
+
+<!-- 4 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Bangalore Airport Taxi</h3>
+    <p class="price">₹4200</p>
+    <p>300 KM • Permit Extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Bangalore Airport')">BOOK</button>
+</div>
+
+<!-- 5 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Cochin Airport Taxi</h3>
+    <p class="price">₹4600</p>
+    <p>280 KM • ₹15/km extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Cochin Airport')">BOOK</button>
+</div>
+
+<!-- 6 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Trichy Taxi</h3>
+    <p class="price">₹2220</p>
+    <p>75–130 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Trichy')">BOOK</button>
+</div>
+
+<!-- 7 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Coimbatore Taxi</h3>
+    <p class="price">₹2220</p>
+    <p>130 KM • ₹14/km extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Coimbatore')">BOOK</button>
+</div>
+
+<!-- 8 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Chennai Taxi</h3>
+    <p class="price">₹5720</p>
+    <p>380 KM • ₹14/km extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Chennai')">BOOK</button>
+</div>
+
+<!-- 9 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Bangalore Taxi</h3>
+    <p class="price">₹4180</p>
+    <p>270 KM • Permit Extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Bangalore')">BOOK</button>
+</div>
+
+<!-- 10 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Salem Taxi</h3>
+    <p class="price">₹2220</p>
+    <p>90–130 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Salem')">BOOK</button>
+</div>
+
+<!-- 11 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Madurai Taxi</h3>
+    <p class="price">₹2360</p>
+    <p>140 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Madurai')">BOOK</button>
+</div>
+
+<!-- 12 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Theni Taxi</h3>
+    <p class="price">₹2500</p>
+    <p>150 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Theni')">BOOK</button>
+</div>
+
+<!-- 13 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Thanjavur Taxi</h3>
+    <p class="price">₹2300</p>
+    <p>135 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Thanjavur')">BOOK</button>
+</div>
+
+<!-- 14 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Pondicherry Taxi</h3>
+    <p class="price">₹3900</p>
+    <p>250 KM • Permit Extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Pondicherry')">BOOK</button>
+</div>
+
+<!-- 15 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Karaikal Taxi</h3>
+    <p class="price">₹3620</p>
+    <p>230 KM • Permit Extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Karaikal')">BOOK</button>
+</div>
+
+<!-- 16 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Karaikudi Taxi</h3>
+    <p class="price">₹2780</p>
+    <p>170 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Karaikudi')">BOOK</button>
+</div>
+
+<!-- 17 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Rameswaram Taxi</h3>
+    <p class="price">₹4810</p>
+    <p>315 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Rameswaram')">BOOK</button>
+</div>
+
+<!-- 18 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Palani Taxi</h3>
+    <p class="price">₹2220</p>
+    <p>100–130 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Palani')">BOOK</button>
+</div>
+
+<!-- 19 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Tiruchendur Taxi</h3>
+    <p class="price">₹4880</p>
+    <p>320 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Tiruchendur')">BOOK</button>
+</div>
+
+<!-- 20 -->
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur to Tirunelveli Taxi</h3>
+    <p class="price">₹4320</p>
+    <p>280 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Tirunelveli')">BOOK</button>
+</div>
+
+<!-- (You can add remaining cards same way if needed) -->
 
 </div>
 
@@ -203,31 +466,19 @@ button{
 var selectedCab = "Mini";
 var selectedTrip = "Airport";
 
-/* Select Cab */
 function selectCab(element, cabType){
   selectedCab = cabType;
-
-  document.querySelectorAll(".cab").forEach(c =>
-    c.classList.remove("selected")
-  );
-
+  document.querySelectorAll(".cab").forEach(c=>c.classList.remove("selected"));
   element.classList.add("selected");
 }
 
-/* Select Trip */
 function selectTrip(element, tripType){
   selectedTrip = tripType;
-
-  document.querySelectorAll(".toggle").forEach(t =>
-    t.classList.remove("active")
-  );
-
+  document.querySelectorAll(".toggle").forEach(t=>t.classList.remove("active"));
   element.classList.add("active");
 }
 
-/* Booking */
 function bookCab(){
-
   var name = document.getElementById("name").value.trim();
   var phone = document.getElementById("phone").value.trim();
   var pickup = document.getElementById("pickup").value.trim();
@@ -238,245 +489,24 @@ function bookCab(){
     return;
   }
 
-  var message =
-`🚕 Royal Cabz Booking
-Trip Type: ${selectedTrip}
+  var msg = `🚕 Royal Cabz Booking
+Trip: ${selectedTrip}
 Name: ${name}
 Phone: ${phone}
 Pickup: ${pickup}
 Drop: ${drop}
-Cab Type: ${selectedCab}`;
+Cab: ${selectedCab}`;
 
-  var whatsappNumber = "919488004687";
+  window.open("https://wa.me/919488004687?text=" + encodeURIComponent(msg));
+}
 
-  var url = "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message);
-
-  window.open(url, "_blank");
+function quickBook(from,to){
+  var msg = `🚕 Royal Cabz Booking
+Trip: ${from} to ${to}`;
+  window.open("https://wa.me/919488004687?text=" + encodeURIComponent(msg));
 }
 
 </script>
 
 </body>
-<div class="routes">
-
-<!-- 1 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Trichy Airport Taxi</h3>
-    <p>83 KM • Driver bata included</p>
-    <p class="price">₹2220</p>
-    <p>Toll & Parking Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Trichy Airport')">BOOK NOW</button>
-</div>
-
-<!-- 2 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Coimbatore Airport Taxi</h3>
-    <p>Min 130 KM • Driver bata included</p>
-    <p class="price">₹2220</p>
-    <p>₹14/km extra • Toll & Parking Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Coimbatore Airport')">BOOK NOW</button>
-</div>
-
-<!-- 3 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Chennai Airport Taxi</h3>
-    <p>360 KM • Driver bata included</p>
-    <p class="price">₹5440</p>
-    <p>₹14/km extra • Toll & Parking Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Chennai Airport')">BOOK NOW</button>
-</div>
-
-<!-- 4 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Bangalore Airport Taxi</h3>
-    <p>300 KM • Driver bata included</p>
-    <p class="price">₹4200</p>
-    <p>₹14/km extra • Toll, Parking & Permit Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Bangalore Airport')">BOOK NOW</button>
-</div>
-
-<!-- 5 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Cochin Airport Taxi</h3>
-    <p>280 KM • Driver bata included</p>
-    <p class="price">₹4600</p>
-    <p>₹15/km extra • Toll, Parking & Permit Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Cochin Airport')">BOOK NOW</button>
-</div>
-
-<!-- 6 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Trichy Taxi</h3>
-    <p>75–130 KM • Driver bata included</p>
-    <p class="price">₹2220</p>
-    <p>Toll & Parking Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Trichy')">BOOK NOW</button>
-</div>
-
-<!-- 7 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Coimbatore Taxi</h3>
-    <p>130 KM • Driver bata included</p>
-    <p class="price">₹2220</p>
-    <p>₹14/km extra • Toll & Parking Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Coimbatore')">BOOK NOW</button>
-</div>
-
-<!-- 8 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Chennai Taxi</h3>
-    <p>380 KM • Driver bata included</p>
-    <p class="price">₹5720</p>
-    <p>₹14/km extra • Toll & Parking Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Chennai')">BOOK NOW</button>
-</div>
-
-<!-- 9 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Bangalore Taxi</h3>
-    <p>270 KM • Driver bata included</p>
-    <p class="price">₹4180</p>
-    <p>₹14/km extra • Toll, Parking & Permit Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Bangalore')">BOOK NOW</button>
-</div>
-
-<!-- 10 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Salem Taxi</h3>
-    <p>90–130 KM • Driver bata included</p>
-    <p class="price">₹2220</p>
-    <p>₹14/km extra • Toll & Parking Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Salem')">BOOK NOW</button>
-</div>
-
-<!-- 11 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Madurai Taxi</h3>
-    <p>140 KM • Driver bata included</p>
-    <p class="price">₹2360</p>
-    <p>₹14/km extra • Toll & Parking Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Madurai')">BOOK NOW</button>
-</div>
-
-<!-- 12 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Theni Taxi</h3>
-    <p>150 KM • Driver bata included</p>
-    <p class="price">₹2500</p>
-    <p>₹14/km extra • Toll & Parking Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Theni')">BOOK NOW</button>
-</div>
-
-<!-- 13 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Thanjavur Taxi</h3>
-    <p>135 KM • Driver bata included</p>
-    <p class="price">₹2300</p>
-    <p>₹14/km extra • Toll & Parking Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Thanjavur')">BOOK NOW</button>
-</div>
-
-<!-- 14 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Pondicherry Taxi</h3>
-    <p>250 KM • Driver bata included</p>
-    <p class="price">₹3900</p>
-    <p>₹14/km extra • Toll, Parking & Permit Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Pondicherry')">BOOK NOW</button>
-</div>
-
-<!-- 15 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Karaikal Taxi</h3>
-    <p>230 KM • Driver bata included</p>
-    <p class="price">₹3620</p>
-    <p>₹14/km extra • Toll, Parking & Permit Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Karaikal')">BOOK NOW</button>
-</div>
-
-<!-- 16 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Karaikudi Taxi</h3>
-    <p>170 KM • Driver bata included</p>
-    <p class="price">₹2780</p>
-    <p>₹14/km extra • Toll & Parking Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Karaikudi')">BOOK NOW</button>
-</div>
-
-<!-- 17 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Rameswaram Taxi</h3>
-    <p>315 KM • Driver bata included</p>
-    <p class="price">₹4810</p>
-    <p>Toll & Parking Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Rameswaram')">BOOK NOW</button>
-</div>
-
-<!-- 18 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Palani Taxi</h3>
-    <p>100–130 KM • Driver bata included</p>
-    <p class="price">₹2220</p>
-    <p>Toll & Parking Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Palani')">BOOK NOW</button>
-</div>
-
-<!-- 19 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Tiruchendur Taxi</h3>
-    <p>320 KM • Driver bata included</p>
-    <p class="price">₹4880</p>
-    <p>₹14/km extra • Toll & Parking Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Tiruchendur')">BOOK NOW</button>
-</div>
-
-<!-- 20 -->
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur to Tirunelveli Taxi</h3>
-    <p>280 KM • Driver bata included</p>
-    <p class="price">₹4320</p>
-    <p>₹14/km extra • Toll & Parking Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Tirunelveli')">BOOK NOW</button>
-</div>
-
-</div>
+</html>
