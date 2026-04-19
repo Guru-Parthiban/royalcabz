@@ -27,7 +27,18 @@ body{
   position:relative;
   overflow:hidden;
   color:white;
-  background:FFFF14;
+
+  /* Animated gradient */
+  background:linear-gradient(-45deg,#2193b0,#6dd5ed,#00c6ff,#0072ff);
+  background-size:400% 400%;
+  animation:gradientMove 8s ease infinite;
+}
+
+/* Gradient animation */
+@keyframes gradientMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
 }
 
 /* Faded Logo */
@@ -40,19 +51,37 @@ body{
   background-repeat:no-repeat;
   background-position:center;
   background-size:cover;
-  opacity:0.25;
+  opacity:0.10;
+
+  /* Subtle zoom animation */
+  animation:zoomLogo 10s ease-in-out infinite alternate;
 }
 
-/* Header text */
-.header h1,
-.header p{
-  position:relative;
+@keyframes zoomLogo{
+  0%{transform:scale(1);}
+  100%{transform:scale(1.1);}
+}
+  .header h1{
   z-index:1;
   margin:0;
+  animation:fadeDown 1s ease;
 }
 
 .header p{
+  z-index:1;
   font-size:14px;
+  animation:fadeUp 1.2s ease;
+}
+
+/* Text animations */
+@keyframes fadeDown{
+  from{opacity:0; transform:translateY(-20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
 }
 
 /* FORM */
