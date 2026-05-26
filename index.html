@@ -2,123 +2,180 @@
 <html>
 <head>
 <title>Royal Cabz</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 
-/* BODY */
+/* ===== BODY ===== */
 body{
   margin:0;
   font-family:Arial, sans-serif;
-  background:white;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+  background:#f5f5f5;
+  overflow-x:hidden;
 }
 
-/* ===== HEADER ===== */
+/* ===== PREMIUM HEADER ===== */
 .main-header{
   width:100%;
-  height:220px;
+  height:260px;
+  position:relative;
+  overflow:hidden;
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
   color:white;
-  position:relative;
-  overflow:hidden;
 
-  background:linear-gradient(to bottom, #000000, #111111, transparent);
-}
+  background:
+  linear-gradient(to bottom,
+  rgba(0,0,0,0.9),
+  rgba(0,0,0,0.75),
+  rgba(0,0,0,0.3),
+  transparent),
 
-/* Faded logo */
-.main-header::before{
-  content:"";
-  position:absolute;
-  width:100%;
-  height:100%;
-  background-image:url("logo.png"); /* or images/logo.png */
+  url("logo.png");
+
   background-size:cover;
   background-position:center;
-  opacity:0.08;
+}
+
+/* Glow animation */
+.main-header::after{
+  content:"";
+  position:absolute;
+  width:200%;
+  height:200%;
+  background:radial-gradient(circle, rgba(255,193,7,0.12), transparent 60%);
+  animation:moveGlow 8s linear infinite;
+}
+
+@keyframes moveGlow{
+  0%{
+    transform:translate(-30%,-30%);
+  }
+  50%{
+    transform:translate(0%,0%);
+  }
+  100%{
+    transform:translate(-30%,-30%);
+  }
 }
 
 .header-content{
   position:relative;
-  z-index:1;
+  z-index:2;
+  padding:20px;
 }
 
 .header-content h1{
   margin:0;
-  font-size:26px;
+  font-size:32px;
+  text-shadow:0 0 15px rgba(255,255,255,0.5);
+  animation:fadeDown 1s ease;
 }
 
 .header-content p{
-  margin-top:5px;
-  font-size:14px;
-  color:#ccc;
+  margin-top:10px;
+  font-size:15px;
+  color:#ddd;
+  animation:fadeUp 1.2s ease;
 }
 
-/* ===== FORM ===== */
+@keyframes fadeDown{
+  from{
+    opacity:0;
+    transform:translateY(-20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* ===== BOOKING FORM ===== */
 .container{
   width:90%;
-  max-width:350px;
+  max-width:360px;
   background:white;
-  padding:25px;
-  border-radius:12px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+  margin:auto;
   margin-top:-40px;
+  padding:25px;
+  border-radius:16px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.15);
+  position:relative;
+  z-index:5;
 }
 
-h2{
+.container h2{
   text-align:center;
+  margin-bottom:20px;
 }
 
+/* Inputs */
 input{
   width:100%;
   padding:12px;
   margin:10px 0;
-  border-radius:6px;
+  border-radius:8px;
   border:1px solid #ccc;
-  font-size:16px;
+  font-size:15px;
+  box-sizing:border-box;
 }
 
-/* Trip Toggle */
+/* ===== TRIP TYPE ===== */
 .trip-type{
   display:flex;
   gap:10px;
-  margin:15px 0;
+  margin-bottom:15px;
 }
 
 .toggle{
   flex:1;
-  padding:10px;
   text-align:center;
-  border:2px solid #ddd;
+  padding:10px;
   border-radius:8px;
+  border:2px solid #ddd;
   cursor:pointer;
   background:#f9f9f9;
+  transition:0.3s;
+  font-size:14px;
 }
 
 .toggle.active{
   background:#2193b0;
   color:white;
+  border-color:#2193b0;
 }
 
-/* Cab */
+/* ===== CABS ===== */
 .cabs{
   display:flex;
   justify-content:space-between;
+  margin-top:15px;
 }
 
 .cab{
   width:30%;
-  padding:10px;
   text-align:center;
   border:2px solid #ddd;
-  border-radius:8px;
+  border-radius:10px;
+  padding:10px;
   cursor:pointer;
   position:relative;
+  transition:0.3s;
+  background:white;
 }
 
 .cab.selected{
@@ -130,34 +187,36 @@ input{
   width:60px;
 }
 
-/* Tick */
 .tick{
   position:absolute;
   top:5px;
   right:5px;
-  background:#2193b0;
-  color:white;
-  border-radius:50%;
   width:20px;
   height:20px;
+  border-radius:50%;
+  background:#2193b0;
+  color:white;
   display:none;
   align-items:center;
   justify-content:center;
+  font-size:12px;
 }
 
 .cab.selected .tick{
   display:flex;
 }
 
-/* Button */
-button{
+/* ===== BUTTON ===== */
+.main-btn{
   width:100%;
-  padding:12px;
-  background:#ffc107;
+  padding:13px;
+  margin-top:18px;
   border:none;
-  border-radius:6px;
+  border-radius:8px;
+  background:#ffc107;
+  color:black;
   font-size:16px;
-  margin-top:15px;
+  font-weight:bold;
   cursor:pointer;
 }
 
@@ -168,12 +227,18 @@ button{
   margin:30px auto;
 }
 
+.routes h2{
+  text-align:center;
+  margin-bottom:20px;
+}
+
 .route-card{
-  background:#fff;
+  background:white;
+  border-radius:12px;
   padding:15px;
   margin-bottom:15px;
-  border-radius:10px;
   box-shadow:0 5px 15px rgba(0,0,0,0.1);
+
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -186,12 +251,55 @@ button{
 
 .price{
   font-weight:bold;
-  margin:5px 0;
+  margin:6px 0;
+  color:#2193b0;
+}
+
+.route-card p{
+  margin:3px 0;
+  font-size:13px;
 }
 
 .route-card button{
-  width:auto;
-  padding:8px 12px;
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+  background:#ffc107;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+/* ===== FLOATING BUTTONS ===== */
+.floating-buttons{
+  position:fixed;
+  right:18px;
+  bottom:20px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  z-index:999;
+}
+
+.floating-buttons a{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  font-size:26px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+.call-btn{
+  background:#ffc107;
+  color:black;
+}
+
+.whatsapp-btn{
+  background:#25D366;
+  color:white;
 }
 
 </style>
@@ -199,77 +307,184 @@ button{
 
 <body>
 
-<!-- HEADER -->
+<!-- ===== HEADER ===== -->
 <div class="main-header">
+
   <div class="header-content">
     <h1>Royal Cabz 🚕</h1>
     <p>Karur's Trusted Taxi Service</p>
   </div>
+
 </div>
 
-<!-- FORM -->
+<!-- ===== BOOKING FORM ===== -->
 <div class="container">
 
 <h2>Book Your Ride</h2>
 
 <div class="trip-type">
-  <div class="toggle active" onclick="selectTrip(this,'Airport')">Airport</div>
-  <div class="toggle" onclick="selectTrip(this,'One Way')">One Way</div>
-  <div class="toggle" onclick="selectTrip(this,'Round Trip')">Round Trip</div>
+
+  <div class="toggle active"
+  onclick="selectTrip(this,'Airport')">
+  Airport
+  </div>
+
+  <div class="toggle"
+  onclick="selectTrip(this,'One Way')">
+  One Way
+  </div>
+
+  <div class="toggle"
+  onclick="selectTrip(this,'Round Trip')">
+  Round Trip
+  </div>
+
 </div>
 
-<input id="name" placeholder="Your Name">
-<input id="phone" placeholder="Phone Number">
-<input id="pickup" placeholder="Pickup Location">
-<input id="drop" placeholder="Drop Location">
+<input type="text" id="name"
+placeholder="Your Name">
 
+<input type="tel" id="phone"
+placeholder="Phone Number">
+
+<input type="text" id="pickup"
+placeholder="Pickup Location">
+
+<input type="text" id="drop"
+placeholder="Drop Location">
+
+<!-- CABS -->
 <div class="cabs">
-  <div class="cab selected" onclick="selectCab(this,'Mini')">
+
+  <div class="cab selected"
+  onclick="selectCab(this,'Mini')">
+
     <div class="tick">✓</div>
+
     <img src="https://img.icons8.com/color/96/car.png">
+
     <p>Mini</p>
+
   </div>
 
-  <div class="cab" onclick="selectCab(this,'Sedan')">
+  <div class="cab"
+  onclick="selectCab(this,'Sedan')">
+
     <div class="tick">✓</div>
+
     <img src="https://img.icons8.com/color/96/sedan.png">
+
     <p>Sedan</p>
+
   </div>
 
-  <div class="cab" onclick="selectCab(this,'SUV')">
+  <div class="cab"
+  onclick="selectCab(this,'SUV')">
+
     <div class="tick">✓</div>
+
     <img src="https://img.icons8.com/color/96/suv.png">
+
     <p>SUV</p>
+
   </div>
-</div>
-
-<button onclick="bookCab()">Book via WhatsApp</button>
 
 </div>
 
-<!-- ROUTES -->
+<button class="main-btn"
+onclick="bookCab()">
+Book via WhatsApp
+</button>
+
+</div>
+
+<!-- ===== ROUTES ===== -->
 <div class="routes">
 
 <h2>Popular Routes from Karur</h2>
 
-<!-- SAMPLE (repeat same pattern for all 20 if needed) -->
+<!-- CARD -->
 <div class="route-card">
   <div class="route-info">
     <h3>Karur → Trichy Airport Taxi</h3>
     <p class="price">₹2220</p>
     <p>83 KM • Toll Extra</p>
   </div>
-  <button onclick="quickBook('Karur','Trichy Airport')">BOOK</button>
+  <button onclick="quickBook('Karur','Trichy Airport')">
+  BOOK
+  </button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Coimbatore Airport Taxi</h3>
+    <p class="price">₹2220</p>
+    <p>130 KM • ₹14/km extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Coimbatore Airport')">
+  BOOK
+  </button>
 </div>
 
 <div class="route-card">
   <div class="route-info">
     <h3>Karur → Chennai Taxi</h3>
     <p class="price">₹5720</p>
-    <p>380 KM</p>
+    <p>380 KM • Toll Extra</p>
   </div>
-  <button onclick="quickBook('Karur','Chennai')">BOOK</button>
+  <button onclick="quickBook('Karur','Chennai')">
+  BOOK
+  </button>
 </div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Bangalore Taxi</h3>
+    <p class="price">₹4180</p>
+    <p>270 KM • Permit Extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Bangalore')">
+  BOOK
+  </button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Madurai Taxi</h3>
+    <p class="price">₹2360</p>
+    <p>140 KM • Toll Extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Madurai')">
+  BOOK
+  </button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Salem Taxi</h3>
+    <p class="price">₹2220</p>
+    <p>90-130 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Salem')">
+  BOOK
+  </button>
+</div>
+
+</div>
+
+<!-- ===== FLOATING BUTTONS ===== -->
+<div class="floating-buttons">
+
+  <a href="tel:+919488004687"
+  class="call-btn">
+  📞
+  </a>
+
+  <a href="https://wa.me/919488004687"
+  target="_blank"
+  class="whatsapp-btn">
+  💬
+  </a>
 
 </div>
 
@@ -278,40 +493,85 @@ button{
 var selectedCab="Mini";
 var selectedTrip="Airport";
 
-function selectCab(el,type){
-  selectedCab=type;
-  document.querySelectorAll(".cab").forEach(c=>c.classList.remove("selected"));
-  el.classList.add("selected");
+/* SELECT CAB */
+function selectCab(element,cabType){
+
+  selectedCab=cabType;
+
+  document.querySelectorAll(".cab")
+  .forEach(c=>c.classList.remove("selected"));
+
+  element.classList.add("selected");
 }
 
-function selectTrip(el,type){
-  selectedTrip=type;
-  document.querySelectorAll(".toggle").forEach(t=>t.classList.remove("active"));
-  el.classList.add("active");
+/* SELECT TRIP */
+function selectTrip(element,tripType){
+
+  selectedTrip=tripType;
+
+  document.querySelectorAll(".toggle")
+  .forEach(t=>t.classList.remove("active"));
+
+  element.classList.add("active");
 }
 
+/* MAIN BOOKING */
 function bookCab(){
-  let name=name.value, phone=phone.value, pickup=pickup.value, drop=drop.value;
 
-  if(!name||!phone||!pickup||!drop){
-    alert("Fill all details"); return;
+  var name=
+  document.getElementById("name").value.trim();
+
+  var phone=
+  document.getElementById("phone").value.trim();
+
+  var pickup=
+  document.getElementById("pickup").value.trim();
+
+  var drop=
+  document.getElementById("drop").value.trim();
+
+  if(!name || !phone || !pickup || !drop){
+
+    alert("Please fill all details");
+
+    return;
   }
 
-  let msg=`🚕 Royal Cabz
-Trip: ${selectedTrip}
-Name: ${name}
-Phone: ${phone}
-Pickup: ${pickup}
-Drop: ${drop}
-Cab: ${selectedCab}`;
+  var message=
+`🚕 Royal Cabz Booking
 
-  window.open("https://wa.me/919488004687?text="+encodeURIComponent(msg));
+Trip Type: ${selectedTrip}
+
+Name: ${name}
+
+Phone: ${phone}
+
+Pickup: ${pickup}
+
+Drop: ${drop}
+
+Cab Type: ${selectedCab}`;
+
+  var url=
+  "https://wa.me/919488004687?text="
+  + encodeURIComponent(message);
+
+  window.open(url,"_blank");
 }
 
+/* QUICK ROUTE BOOK */
 function quickBook(from,to){
-  let msg=`🚕 Royal Cabz Booking
+
+  var message=
+`🚕 Royal Cabz Booking
+
 Trip: ${from} to ${to}`;
-  window.open("https://wa.me/919488004687?text="+encodeURIComponent(msg));
+
+  var url=
+  "https://wa.me/919488004687?text="
+  + encodeURIComponent(message);
+
+  window.open(url,"_blank");
 }
 
 </script>
