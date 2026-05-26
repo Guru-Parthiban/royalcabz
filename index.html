@@ -2,12 +2,9 @@
 <html>
 <head>
 <title>Royal Cabz</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-
-/* ===== BODY ===== */
 body{
   margin:0;
   font-family:Arial, sans-serif;
@@ -15,11 +12,13 @@ body{
   overflow-x:hidden;
 }
 
-/* ===== PREMIUM HEADER ===== */
+/* STICKY HEADER */
 .main-header{
   width:100%;
   height:260px;
-  position:relative;
+  position:sticky;
+  top:0;
+  z-index:100;
   overflow:hidden;
   display:flex;
   align-items:center;
@@ -29,37 +28,14 @@ body{
 
   background:
   linear-gradient(to bottom,
-  rgba(0,0,0,0.9),
+  rgba(0,0,0,0.95),
   rgba(0,0,0,0.75),
-  rgba(0,0,0,0.3),
+  rgba(0,0,0,0.35),
   transparent),
-
   url("logo.png");
 
   background-size:cover;
   background-position:center;
-}
-
-/* Glow animation */
-.main-header::after{
-  content:"";
-  position:absolute;
-  width:200%;
-  height:200%;
-  background:radial-gradient(circle, rgba(255,193,7,0.12), transparent 60%);
-  animation:moveGlow 8s linear infinite;
-}
-
-@keyframes moveGlow{
-  0%{
-    transform:translate(-30%,-30%);
-  }
-  50%{
-    transform:translate(0%,0%);
-  }
-  100%{
-    transform:translate(-30%,-30%);
-  }
 }
 
 .header-content{
@@ -72,58 +48,33 @@ body{
   margin:0;
   font-size:32px;
   text-shadow:0 0 15px rgba(255,255,255,0.5);
-  animation:fadeDown 1s ease;
 }
 
 .header-content p{
   margin-top:10px;
   font-size:15px;
   color:#ddd;
-  animation:fadeUp 1.2s ease;
 }
 
-@keyframes fadeDown{
-  from{
-    opacity:0;
-    transform:translateY(-20px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-@keyframes fadeUp{
-  from{
-    opacity:0;
-    transform:translateY(20px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-/* ===== BOOKING FORM ===== */
+/* BOOKING FORM */
 .container{
   width:90%;
   max-width:360px;
   background:white;
-  margin:auto;
-  margin-top:-40px;
+  margin:35px auto 0;
   padding:25px;
-  border-radius:16px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.15);
+  border-radius:14px;
+  border:2px solid #e6e6e6;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
   position:relative;
   z-index:5;
 }
 
 .container h2{
   text-align:center;
-  margin-bottom:20px;
+  margin-top:0;
 }
 
-/* Inputs */
 input{
   width:100%;
   padding:12px;
@@ -134,7 +85,7 @@ input{
   box-sizing:border-box;
 }
 
-/* ===== TRIP TYPE ===== */
+/* TRIP TYPE */
 .trip-type{
   display:flex;
   gap:10px;
@@ -159,7 +110,7 @@ input{
   border-color:#2193b0;
 }
 
-/* ===== CABS ===== */
+/* CABS */
 .cabs{
   display:flex;
   justify-content:space-between;
@@ -206,7 +157,7 @@ input{
   display:flex;
 }
 
-/* ===== BUTTON ===== */
+/* BUTTON */
 .main-btn{
   width:100%;
   padding:13px;
@@ -220,7 +171,7 @@ input{
   cursor:pointer;
 }
 
-/* ===== ROUTES ===== */
+/* ROUTES */
 .routes{
   width:90%;
   max-width:500px;
@@ -237,11 +188,12 @@ input{
   border-radius:12px;
   padding:15px;
   margin-bottom:15px;
+  border:2px solid #e6e6e6;
   box-shadow:0 5px 15px rgba(0,0,0,0.1);
-
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:10px;
 }
 
 .route-info h3{
@@ -269,7 +221,7 @@ input{
   font-weight:bold;
 }
 
-/* ===== FLOATING BUTTONS ===== */
+/* FLOATING BUTTONS */
 .floating-buttons{
   position:fixed;
   right:18px;
@@ -301,140 +253,131 @@ input{
   background:#25D366;
   color:white;
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- ===== HEADER ===== -->
 <div class="main-header">
-
   <div class="header-content">
     <h1>Royal Cabz 🚕</h1>
     <p>Karur's Trusted Taxi Service</p>
   </div>
-
 </div>
 
-<!-- ===== BOOKING FORM ===== -->
 <div class="container">
 
 <h2>Book Your Ride</h2>
 
 <div class="trip-type">
-
-  <div class="toggle active"
-  onclick="selectTrip(this,'Airport')">
-  Airport
-  </div>
-
-  <div class="toggle"
-  onclick="selectTrip(this,'One Way')">
-  One Way
-  </div>
-
-  <div class="toggle"
-  onclick="selectTrip(this,'Round Trip')">
-  Round Trip
-  </div>
-
+  <div class="toggle active" onclick="selectTrip(this,'Airport')">Airport</div>
+  <div class="toggle" onclick="selectTrip(this,'One Way')">One Way</div>
+  <div class="toggle" onclick="selectTrip(this,'Round Trip')">Round Trip</div>
 </div>
 
-<input type="text" id="name"
-placeholder="Your Name">
+<input type="text" id="name" placeholder="Your Name">
+<input type="tel" id="phone" placeholder="Phone Number">
+<input type="text" id="pickup" placeholder="Pickup Location">
+<input type="text" id="drop" placeholder="Drop Location">
 
-<input type="tel" id="phone"
-placeholder="Phone Number">
-
-<input type="text" id="pickup"
-placeholder="Pickup Location">
-
-<input type="text" id="drop"
-placeholder="Drop Location">
-
-<!-- CABS -->
 <div class="cabs">
-
-  <div class="cab selected"
-  onclick="selectCab(this,'Mini')">
-
+  <div class="cab selected" onclick="selectCab(this,'Mini')">
     <div class="tick">✓</div>
-
     <img src="https://img.icons8.com/color/96/car.png">
-
     <p>Mini</p>
-
   </div>
 
-  <div class="cab"
-  onclick="selectCab(this,'Sedan')">
-
+  <div class="cab" onclick="selectCab(this,'Sedan')">
     <div class="tick">✓</div>
-
     <img src="https://img.icons8.com/color/96/sedan.png">
-
     <p>Sedan</p>
-
   </div>
 
-  <div class="cab"
-  onclick="selectCab(this,'SUV')">
-
+  <div class="cab" onclick="selectCab(this,'SUV')">
     <div class="tick">✓</div>
-
     <img src="https://img.icons8.com/color/96/suv.png">
-
     <p>SUV</p>
-
   </div>
+</div>
+
+<button class="main-btn" onclick="bookCab()">Book via WhatsApp</button>
 
 </div>
 
-<button class="main-btn"
-onclick="bookCab()">
-Book via WhatsApp
-</button>
-
-</div>
-
-<!-- ===== ROUTES ===== -->
 <div class="routes">
 
 <h2>Popular Routes from Karur</h2>
 
-<!-- CARD -->
 <div class="route-card">
   <div class="route-info">
     <h3>Karur → Trichy Airport Taxi</h3>
     <p class="price">₹2220</p>
-    <p>83 KM • Toll Extra</p>
+    <p>83 KM • Toll & Parking Extra</p>
   </div>
-  <button onclick="quickBook('Karur','Trichy Airport')">
-  BOOK
-  </button>
+  <button onclick="quickBook('Karur','Trichy Airport')">BOOK</button>
 </div>
 
 <div class="route-card">
   <div class="route-info">
     <h3>Karur → Coimbatore Airport Taxi</h3>
     <p class="price">₹2220</p>
+    <p>Min 130 KM • ₹14/km extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Coimbatore Airport')">BOOK</button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Chennai Airport Taxi</h3>
+    <p class="price">₹5440</p>
+    <p>360 KM • ₹14/km extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Chennai Airport')">BOOK</button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Bangalore Airport Taxi</h3>
+    <p class="price">₹4200</p>
+    <p>300 KM • Permit Extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Bangalore Airport')">BOOK</button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Cochin Airport Taxi</h3>
+    <p class="price">₹4600</p>
+    <p>280 KM • ₹15/km extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Cochin Airport')">BOOK</button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Trichy Taxi</h3>
+    <p class="price">₹2220</p>
+    <p>75–130 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Trichy')">BOOK</button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Coimbatore Taxi</h3>
+    <p class="price">₹2220</p>
     <p>130 KM • ₹14/km extra</p>
   </div>
-  <button onclick="quickBook('Karur','Coimbatore Airport')">
-  BOOK
-  </button>
+  <button onclick="quickBook('Karur','Coimbatore')">BOOK</button>
 </div>
 
 <div class="route-card">
   <div class="route-info">
     <h3>Karur → Chennai Taxi</h3>
     <p class="price">₹5720</p>
-    <p>380 KM • Toll Extra</p>
+    <p>380 KM • ₹14/km extra</p>
   </div>
-  <button onclick="quickBook('Karur','Chennai')">
-  BOOK
-  </button>
+  <button onclick="quickBook('Karur','Chennai')">BOOK</button>
 </div>
 
 <div class="route-card">
@@ -443,137 +386,163 @@ Book via WhatsApp
     <p class="price">₹4180</p>
     <p>270 KM • Permit Extra</p>
   </div>
-  <button onclick="quickBook('Karur','Bangalore')">
-  BOOK
-  </button>
-</div>
-
-<div class="route-card">
-  <div class="route-info">
-    <h3>Karur → Madurai Taxi</h3>
-    <p class="price">₹2360</p>
-    <p>140 KM • Toll Extra</p>
-  </div>
-  <button onclick="quickBook('Karur','Madurai')">
-  BOOK
-  </button>
+  <button onclick="quickBook('Karur','Bangalore')">BOOK</button>
 </div>
 
 <div class="route-card">
   <div class="route-info">
     <h3>Karur → Salem Taxi</h3>
     <p class="price">₹2220</p>
-    <p>90-130 KM</p>
+    <p>90–130 KM</p>
   </div>
-  <button onclick="quickBook('Karur','Salem')">
-  BOOK
-  </button>
+  <button onclick="quickBook('Karur','Salem')">BOOK</button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Madurai Taxi</h3>
+    <p class="price">₹2360</p>
+    <p>140 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Madurai')">BOOK</button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Theni Taxi</h3>
+    <p class="price">₹2500</p>
+    <p>150 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Theni')">BOOK</button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Thanjavur Taxi</h3>
+    <p class="price">₹2300</p>
+    <p>135 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Thanjavur')">BOOK</button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Pondicherry Taxi</h3>
+    <p class="price">₹3900</p>
+    <p>250 KM • Permit Extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Pondicherry')">BOOK</button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Karaikal Taxi</h3>
+    <p class="price">₹3620</p>
+    <p>230 KM • Permit Extra</p>
+  </div>
+  <button onclick="quickBook('Karur','Karaikal')">BOOK</button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Karaikudi Taxi</h3>
+    <p class="price">₹2780</p>
+    <p>170 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Karaikudi')">BOOK</button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Rameswaram Taxi</h3>
+    <p class="price">₹4810</p>
+    <p>315 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Rameswaram')">BOOK</button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Palani Taxi</h3>
+    <p class="price">₹2220</p>
+    <p>100–130 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Palani')">BOOK</button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Tiruchendur Taxi</h3>
+    <p class="price">₹4880</p>
+    <p>320 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Tiruchendur')">BOOK</button>
+</div>
+
+<div class="route-card">
+  <div class="route-info">
+    <h3>Karur → Tirunelveli Taxi</h3>
+    <p class="price">₹4320</p>
+    <p>280 KM</p>
+  </div>
+  <button onclick="quickBook('Karur','Tirunelveli')">BOOK</button>
 </div>
 
 </div>
 
-<!-- ===== FLOATING BUTTONS ===== -->
 <div class="floating-buttons">
-
-  <a href="tel:+919488004687"
-  class="call-btn">
-  📞
-  </a>
-
-  <a href="https://wa.me/919488004687"
-  target="_blank"
-  class="whatsapp-btn">
-  💬
-  </a>
-
+  <a href="tel:+919488004687" class="call-btn">📞</a>
+  <a href="https://wa.me/919488004687" target="_blank" class="whatsapp-btn">💬</a>
 </div>
 
 <script>
+var selectedCab = "Mini";
+var selectedTrip = "Airport";
 
-var selectedCab="Mini";
-var selectedTrip="Airport";
-
-/* SELECT CAB */
 function selectCab(element,cabType){
-
-  selectedCab=cabType;
-
-  document.querySelectorAll(".cab")
-  .forEach(c=>c.classList.remove("selected"));
-
+  selectedCab = cabType;
+  document.querySelectorAll(".cab").forEach(c => c.classList.remove("selected"));
   element.classList.add("selected");
 }
 
-/* SELECT TRIP */
 function selectTrip(element,tripType){
-
-  selectedTrip=tripType;
-
-  document.querySelectorAll(".toggle")
-  .forEach(t=>t.classList.remove("active"));
-
+  selectedTrip = tripType;
+  document.querySelectorAll(".toggle").forEach(t => t.classList.remove("active"));
   element.classList.add("active");
 }
 
-/* MAIN BOOKING */
 function bookCab(){
-
-  var name=
-  document.getElementById("name").value.trim();
-
-  var phone=
-  document.getElementById("phone").value.trim();
-
-  var pickup=
-  document.getElementById("pickup").value.trim();
-
-  var drop=
-  document.getElementById("drop").value.trim();
+  var name = document.getElementById("name").value.trim();
+  var phone = document.getElementById("phone").value.trim();
+  var pickup = document.getElementById("pickup").value.trim();
+  var drop = document.getElementById("drop").value.trim();
 
   if(!name || !phone || !pickup || !drop){
-
     alert("Please fill all details");
-
     return;
   }
 
-  var message=
+  var message =
 `🚕 Royal Cabz Booking
 
 Trip Type: ${selectedTrip}
-
 Name: ${name}
-
 Phone: ${phone}
-
 Pickup: ${pickup}
-
 Drop: ${drop}
-
 Cab Type: ${selectedCab}`;
 
-  var url=
-  "https://wa.me/919488004687?text="
-  + encodeURIComponent(message);
-
-  window.open(url,"_blank");
+  window.open("https://wa.me/919488004687?text=" + encodeURIComponent(message), "_blank");
 }
 
-/* QUICK ROUTE BOOK */
 function quickBook(from,to){
-
-  var message=
+  var message =
 `🚕 Royal Cabz Booking
 
 Trip: ${from} to ${to}`;
 
-  var url=
-  "https://wa.me/919488004687?text="
-  + encodeURIComponent(message);
-
-  window.open(url,"_blank");
+  window.open("https://wa.me/919488004687?text=" + encodeURIComponent(message), "_blank");
 }
-
 </script>
 
 </body>
